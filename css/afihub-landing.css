@@ -1,0 +1,89 @@
+:root {
+  --white: white;
+  --black: black;
+}
+
+body {
+  color: #333;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+a {
+  text-decoration: underline;
+}
+
+.image {
+  max-width: none;
+  display: block;
+}
+
+.body {
+  background-image: url('../images/login-bkgd-slategray-crop.jpg');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  text-align: center;
+  background-color: #00000080;
+  border-radius: 20px;
+  max-width: 50%;
+  margin-top: 100px;
+  padding: 42px;
+  position: relative;
+}
+
+.logo {
+  max-width: 75%;
+  margin-bottom: 0;
+}
+
+.button {
+  color: #2f3338;
+  background-color: #dfdfdf;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.button:active {
+  background-color: #bbb;
+}
+
+.button-contain {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.text-block, .link {
+  color: #c7c7c7;
+}
+
+@media screen and (max-width: 991px) {
+  .container {
+    max-width: 80%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: 75%;
+  }
+
+  .logo {
+    max-width: 95%;
+  }
+
+  .button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .container, .logo {
+    max-width: 100%;
+  }
+}
