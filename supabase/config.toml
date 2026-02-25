@@ -1,0 +1,59 @@
+# =============================================================================
+# AFI Retailer - Supabase Project Configuration
+# =============================================================================
+# This file configures the local Supabase development environment.
+# Copy to supabase/config.toml if using supabase init.
+# =============================================================================
+
+[project]
+id = "afi-retailer-dashboard"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed/seed.sql"]
+
+[studio]
+enabled = true
+port = 54323
+api_url = "http://localhost"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = [
+  "http://localhost:3000/dashboard.html",
+  "https://afiretailer.com/dashboard.html"
+]
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+[storage]
+enabled = true
+file_size_limit = "5MB"
+
+[edge_runtime]
+enabled = true
+policy = "per_worker"
+
+# =============================================================================
+# Database settings (passed to PostgreSQL via app.settings)
+# In production, these are set via Supabase Dashboard > Settings > Database
+# =============================================================================
+[db.settings]
+# IMPORTANT: Replace with a real encryption key in production!
+# Generate with: openssl rand -base64 32
+"app.settings.oauth_encryption_key" = "CHANGE_ME_IN_PRODUCTION_use_openssl_rand_base64_32"
