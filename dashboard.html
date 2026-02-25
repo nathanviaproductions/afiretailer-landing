@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AFI Retailer - Social Media Dashboard</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/dashboard.css" rel="stylesheet" type="text/css">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/favicons.png" rel="apple-touch-icon">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <img src="images/AFI_LLC_2C_OrangeWhite_NR_ijhalf.png" alt="AFI Retailer" class="nav-logo">
+      <span class="nav-divider"></span>
+      <span class="nav-title">Social Media Dashboard</span>
+    </div>
+    <div class="nav-right">
+      <div class="store-selector">
+        <select id="storeSelect">
+          <option value="all">All Locations</option>
+          <option value="store-1" selected>Ashley HomeStore - Tampa</option>
+          <option value="store-2">Ashley HomeStore - Orlando</option>
+          <option value="store-3">Ashley HomeStore - Jacksonville</option>
+        </select>
+      </div>
+      <a href="index.html" class="nav-link">Back to Hub</a>
+    </div>
+  </nav>
+
+  <div class="dashboard-layout">
+
+    <!-- Sidebar: Connected Platforms -->
+    <aside class="sidebar">
+      <h3 class="sidebar-heading">Connected Platforms</h3>
+
+      <div class="platform-card connected" data-platform="meta">
+        <div class="platform-header">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.41 2.87 8.14 6.84 9.45v-6.69H6.46V12h2.42V9.93c0-2.39 1.42-3.71 3.6-3.71 1.04 0 2.13.19 2.13.19v2.34h-1.2c-1.18 0-1.55.74-1.55 1.49V12h2.64l-.42 2.76h-2.22v6.69c3.97-1.31 6.84-5.04 6.84-9.45 0-5.5-4.46-9.96-9.96-9.96z"/></svg>
+          <div>
+            <div class="platform-name">Meta</div>
+            <div class="platform-status">Facebook & Instagram</div>
+          </div>
+        </div>
+        <span class="badge badge-connected">Connected</span>
+      </div>
+
+      <div class="platform-card connected" data-platform="youtube">
+        <div class="platform-header">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>
+          <div>
+            <div class="platform-name">YouTube</div>
+            <div class="platform-status">Ashley HomeStore Tampa</div>
+          </div>
+        </div>
+        <span class="badge badge-connected">Connected</span>
+      </div>
+
+      <div class="platform-card disconnected" data-platform="gmb">
+        <div class="platform-header">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M22 9.74l-2 1.02V7H4v3.76l-2-1.02V6h20v3.74zM5.19 13.77c.48.59 1.18.97 1.97.97.96 0 1.76-.57 2.21-1.39.45.82 1.25 1.39 2.21 1.39s1.76-.57 2.21-1.39c.45.82 1.25 1.39 2.21 1.39.79 0 1.49-.38 1.97-.97L20 12.2V10H4v2.2l1.19 1.57zM12 2L4 6h16l-8-4zM4 15v5c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-5h-2v5H6v-5H4z"/></svg>
+          <div>
+            <div class="platform-name">Google Business</div>
+            <div class="platform-status">Not connected</div>
+          </div>
+        </div>
+        <button class="btn-connect" onclick="connectPlatform('gmb')">Connect</button>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">Date Range</h3>
+        <div class="date-range-picker">
+          <select id="dateRange" onchange="updateDashboard()">
+            <option value="7d">Last 7 Days</option>
+            <option value="30d" selected>Last 30 Days</option>
+            <option value="90d">Last 90 Days</option>
+            <option value="ytd">Year to Date</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">Channel</h3>
+        <div class="filter-chips">
+          <button class="chip active" data-filter="all" onclick="setFilter(this)">All</button>
+          <button class="chip" data-filter="paid" onclick="setFilter(this)">Paid</button>
+          <button class="chip" data-filter="organic" onclick="setFilter(this)">Organic</button>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">Platform</h3>
+        <div class="filter-chips">
+          <button class="chip active" data-platform-filter="all" onclick="setPlatformFilter(this)">All</button>
+          <button class="chip" data-platform-filter="facebook" onclick="setPlatformFilter(this)">Facebook</button>
+          <button class="chip" data-platform-filter="instagram" onclick="setPlatformFilter(this)">Instagram</button>
+          <button class="chip" data-platform-filter="youtube" onclick="setPlatformFilter(this)">YouTube</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- KPI Summary Cards -->
+      <section class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Reach</div>
+          <div class="kpi-value" id="kpiReach">124,892</div>
+          <div class="kpi-change positive">+12.3% vs prior period</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Engagement Rate</div>
+          <div class="kpi-value" id="kpiEngagement">4.7%</div>
+          <div class="kpi-change positive">+0.8% vs prior period</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total Ad Spend</div>
+          <div class="kpi-value" id="kpiSpend">$3,245</div>
+          <div class="kpi-change neutral">-2.1% vs prior period</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">ROAS</div>
+          <div class="kpi-value" id="kpiRoas">5.2x</div>
+          <div class="kpi-change positive">+0.4x vs prior period</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total Video Views</div>
+          <div class="kpi-value" id="kpiViews">48,310</div>
+          <div class="kpi-change positive">+22.1% vs prior period</div>
+        </div>
+      </section>
+
+      <!-- Charts Row -->
+      <section class="charts-row">
+        <div class="chart-card">
+          <h3 class="card-title">Performance Over Time</h3>
+          <canvas id="performanceChart"></canvas>
+        </div>
+        <div class="chart-card chart-card-small">
+          <h3 class="card-title">Spend by Platform</h3>
+          <canvas id="spendChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Creative Performance Grid -->
+      <section class="creative-section">
+        <div class="section-header">
+          <h3 class="section-title">Creative Performance</h3>
+          <div class="sort-controls">
+            <label>Sort by:</label>
+            <select id="sortSelect" onchange="sortCreatives()">
+              <option value="engagement">Engagement Rate</option>
+              <option value="reach">Reach</option>
+              <option value="roas">ROAS</option>
+              <option value="views">Video Views</option>
+              <option value="spend">Ad Spend</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="creative-grid" id="creativeGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Connect Platform Modal -->
+  <div class="modal-overlay" id="connectModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h2 class="modal-title" id="modalTitle">Connect Platform</h2>
+      <p class="modal-desc" id="modalDesc">Authorize access to view your performance data.</p>
+      <div class="modal-body" id="modalBody">
+        <div class="oauth-steps">
+          <div class="oauth-step">
+            <span class="step-number">1</span>
+            <span>Click the button below to authorize</span>
+          </div>
+          <div class="oauth-step">
+            <span class="step-number">2</span>
+            <span>Select your business account</span>
+          </div>
+          <div class="oauth-step">
+            <span class="step-number">3</span>
+            <span>Grant read-only access to your data</span>
+          </div>
+        </div>
+        <button class="btn-oauth" id="oauthBtn" onclick="startOAuth()">
+          <span id="oauthBtnText">Authorize with Google</span>
+        </button>
+        <p class="modal-note">We only request read-only access. We never post or modify your accounts.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
